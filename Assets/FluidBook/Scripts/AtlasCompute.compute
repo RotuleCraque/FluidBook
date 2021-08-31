@@ -1,0 +1,15 @@
+﻿#pragma kernel CopyToAtlas
+
+RWTexture2D<float4> Atlas;
+RWTexture2D<float4> Source;
+
+int CoordX;
+int CoordY;
+
+[numthreads(32,32,1)]
+void CopyToAtlas (uint3 id : SV_DispatchThreadID) {
+    uint2 atlasCoord = uint2(CoordX + id.x, CoordY + id.y);
+
+    Atlas[atlasCoord] = Source[id.xy];
+    //Atlas[atlasCoord] = float4(1.0, 0.0, 0.5, 1.0);
+}
